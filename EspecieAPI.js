@@ -14,15 +14,17 @@ class EspecieAPI{
         //TO DO:validar datos
         const fnombre=document.getElementById("nombre").value;
         const fclasificacion=document.getElementById("clasificacion").value;
-        const fesperanza_vida=document.getElementById("espernza_vida").value;
-        const fpeso_promedio=document.getElementById("peso_promedio").value;
+        const fesperanza_vida=parseInt(document.getElementById("esperanza_vida").value);
+        const fpeso_promedio=parseFloat(document.getElementById("peso_promedio").value);
+        const ffuente=parseInt(document.getElementById("fuente").value);
 
         //crear un json con esos datos con una estructura de cuatro variables correspondientes a las tomadas del formulario
         const datos={
             nombre:fnombre,
             clasificacion:fclasificacion,
             esperanza_vida:fesperanza_vida,
-            peso_promedio:fpeso_promedio
+            peso_promedio:fpeso_promedio,
+            fuente:ffuente
         };
 
         //TO DO:Falta gestionar errores  
@@ -45,6 +47,35 @@ class EspecieAPI{
         console.log("El registro se insertó correctamente")
 
 
+    }
+
+    // 1. conectarnos a la ruta /listar_especies que nos devuelve el json con los datos 
+    //2. recorer el json 
+    //2.1 agregar una fila en la tabla por cada objeto retornado en el json
+
+
+    async listarEspecies(){
+        //1. 
+        //TO DO :la API no deberia estar sin protección
+        let especies= await fetch("http://localhost:3000/listar_especies" );
+        especies = await especies.json();
+
+        const miTabla=document.getElementById("tabla_especies");
+
+        //2.
+        especies.forEach(
+            (especie)=> {
+                //2.1
+                const fila= miTabla.insertRow();
+                fila.insertCell().innerText= especie.id_especie;    
+                fila.insertCell().innerText= especie.nombre;
+                fila.insertCell().innerText= especie.clasificacion;
+                fila.insertCell().innerText= especie.esperanza_vida;
+                fila.insertCell().innerText= especie.peso_promedio;
+                fila.insertCell().innerText= especie.fuente;                  
+        
+            }
+        );
     }
 
 

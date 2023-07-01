@@ -12,7 +12,7 @@ miBoton.addEventListener('click',
 async (event)=>{
 
     event.preventDefault();
-    miBoton.disable=true;
+    miBoton.disabled=true;
     await miEspecie.guardarEspecie();
 }
 );
